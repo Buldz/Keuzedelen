@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 6864116735464555153}
   - component: {fileID: 1772632312608109340}
   - component: {fileID: 7828104422304490912}
-  - component: {fileID: 418115211256725751}
   - component: {fileID: 6542071097795301324}
   m_Layer: 0
   m_Name: Weapon
@@ -117,27 +116,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &418115211256725751
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8143907397795084042}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6542071097795301324
 MonoBehaviour:
   m_ObjectHideFlags: 0

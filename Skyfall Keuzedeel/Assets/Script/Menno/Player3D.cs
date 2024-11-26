@@ -6,6 +6,7 @@ public class Player3D : MonoBehaviour
 {
     [Header("Attributes")]
     public float health = 100.0f;
+    private float maxHealth = 100.0f;
 
     [Header("Movement")]
     public float speed = 12f;
@@ -30,6 +31,7 @@ public class Player3D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(health);
         isGrounded = controller.isGrounded;
 
         Move();
@@ -77,6 +79,13 @@ public class Player3D : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void TakeHealth(float amount)
+    {
+        if (health >= maxHealth) return;
+
+        health += amount;
     }
 
     private void Die()
