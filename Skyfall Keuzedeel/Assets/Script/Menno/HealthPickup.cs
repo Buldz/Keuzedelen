@@ -18,17 +18,14 @@ public class HealthPickup : MonoBehaviour
 
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collider)
     {
-        Player3D player = collision.gameObject.GetComponent<Player3D>();
-
-        if (player != null)
+        Player3D player = collider.gameObject.GetComponent<Player3D>();
+         
+        if (player != null && player.GiveHealth(health))
         {
             //destroys pickup after collided
             Destroy(this.gameObject);
-
-            //Gives player health
-            player.TakeHealth(health);
         }
     }
 }

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player3D : MonoBehaviour
 {
     [Header("Attributes")]
-    public float health = 100.0f;
+    public float currentHealth = 100.0f;
     private float maxHealth = 100.0f;
 
     [Header("Movement")]
@@ -17,22 +18,28 @@ public class Player3D : MonoBehaviour
     [SerializeField] private Weapon weapon;
     [SerializeField] private CharacterController controller;
 
+    private Text healthText;
+
     //Private Variables
     private Vector3 velocity;
     private bool isGrounded;
-    
+
 
     private void Start()
     {
         controller = GetComponent<CharacterController>();
         weapon = GetComponentInChildren<Weapon>();
+
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(health);
+        //healthText = currentHealth;
         isGrounded = controller.isGrounded;
+
+        Die();
 
         Move();
         Reload();
@@ -40,7 +47,7 @@ public class Player3D : MonoBehaviour
         {
             Shoot();
         }
-        
+
     }
 
     private void Reload()
@@ -73,24 +80,29 @@ public class Player3D : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        health -= amount;
-
-        if (health <= 0f)
-        {
-            Die();
-        }
+        currentHealth -= amount;
     }
 
-    public void TakeHealth(float amount)
+    public bool GiveHealth(float amount)
     {
-        if (health >= maxHealth) return;
+        if (currentHealth >= maxHealth) return false;
 
-        health += amount;
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+        {
+            float healthToGive = Mathf.Min(amount, maxHealth - currentHealth);
+            currentHealth += healthToGive;
+        }
+
+        return true;
     }
 
     private void Die()
     {
-        Destroy(this.gameObject);
+        if (currentHealth <= 0f)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void Move()
