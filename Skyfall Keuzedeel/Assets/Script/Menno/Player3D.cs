@@ -6,19 +6,19 @@ using UnityEngine.UI;
 public class Player3D : MonoBehaviour
 {
     [Header("Attributes")]
-    public float currentHealth = 100.0f;
-    private float maxHealth = 100.0f;
+    public float currentHealth;
+    [SerializeField] private float maxHealth = 100.0f;
 
     [Header("Movement")]
-    public float speed = 12f;
+    public float speed = 12.0f;
     public float gravity = -9.81f;
-    public float jumpHeight = 3f;
+    public float jumpHeight = 3.0f;
 
     [Header("Other")]
     [SerializeField] private Weapon weapon;
     [SerializeField] private CharacterController controller;
 
-    private Text healthText;
+    public Text healthText;
 
     //Private Variables
     private Vector3 velocity;
@@ -36,7 +36,7 @@ public class Player3D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //healthText = currentHealth;
+        healthText.text = currentHealth.ToString();
         isGrounded = controller.isGrounded;
 
         Die();
@@ -73,8 +73,6 @@ public class Player3D : MonoBehaviour
         {
             weapon.nextTimeToFire = Time.time + 1f / weapon.fireRate;
             weapon.Shoot();
-
-            //Debug.Log(currentAmmo);
         }
     }
 

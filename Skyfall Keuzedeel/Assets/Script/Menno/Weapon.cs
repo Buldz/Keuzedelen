@@ -10,21 +10,21 @@ public class Weapon : MonoBehaviour
 
     [Header("Weapon Options")]
     // Damage dealt by weapon //
-    public float damage = 10f;
+    public float damage = 10.0f;
 
     // Range of weapon
-    public float range = 100f;
+   // public float range = 100f;
 
     // Firerate of weapon //
-    public float fireRate = 15f;
-    public float nextTimeToFire = 0f;
+    public float fireRate = 15.0f;
+    public float nextTimeToFire = 0.0f;
 
     // Ammo of weapon
     public int maxAmmo = 10;
     public int currentAmmo;
 
     // Reload time of weapon
-    public float reloadTime = 1f;
+    public float reloadTime = 1.0f;
     public bool isReloading = false;
 
     [Header("Particles")]
@@ -45,26 +45,22 @@ public class Weapon : MonoBehaviour
 
     public GameObject bulletPrefab;
 
+    private void Start()
+    {
+        currentAmmo = maxAmmo;
+    }
+
     public IEnumerator Reload()
     {
         isReloading = true;
-        Debug.Log("Reloading...");
+        //Debug.Log("Reloading...");
 
         yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = maxAmmo;
         isReloading = false;
     }
-
-    private void OnDrawGizmos()
-    {
-         Debug.DrawRay(firePoint.transform.position, firePoint.transform.TransformDirection(Vector3.forward * range), Color.green);
-    }
     
-    private void Start()
-    {
-        currentAmmo = maxAmmo;
-    }
 
     void Update()
     {

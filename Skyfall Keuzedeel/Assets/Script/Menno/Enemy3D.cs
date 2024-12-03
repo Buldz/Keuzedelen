@@ -16,14 +16,15 @@ using static UnityEngine.UI.Image;
 public class Enemy3D : MonoBehaviour
 {
     [Header("Basic settings")]
-    public float health = 100.0f;
+    public float currentHealth;
+    [SerializeField] private float maxHealth = 100.0f;
     [SerializeField] private Weapon weapon;
     [SerializeField] private LayerMask targetMask;
     [SerializeField] private LayerMask obstructionMask;
 
     [Header("Advanced settings")]
-    [SerializeField] private float detetctRadius = 10f;
-    [SerializeField] private float attackRadius = 10f;
+    [SerializeField] private float detetctRadius = 10.0f;
+    [SerializeField] private float attackRadius = 10.0f;
     [SerializeField] private float visionInRadians = 2.0f;
     [SerializeField] private float rotationSpeed = 10.0f;
     [SerializeField] private Transform playerRef;
@@ -36,6 +37,7 @@ public class Enemy3D : MonoBehaviour
 
     private void Start()
     {
+        currentHealth = maxHealth;
         spawnLocation = transform.position;
         // Find weapon as the enemy children //
         weapon = GetComponentInChildren<Weapon>();
@@ -58,8 +60,9 @@ public class Enemy3D : MonoBehaviour
 
     private void Shoot()
     {
-        if (weapon.currentAmmo > 0)
+        if (weapon.currentAmmo > 0 && Time.time >= weapon.nextTimeToFire)
         {
+            weapon.nextTimeToFire = Time.time + 1f / weapon.fireRate;
             weapon.Shoot();
         }
     }
@@ -83,8 +86,8 @@ public class Enemy3D : MonoBehaviour
     public void TakeDamage(float amount)
     {
         hasBeenHit = true;
-        health -= amount;
-        if (health <= 0f)
+        currentHealth -= amount;
+        if (currentHealth <= 0f)
         {
             Die();
         }

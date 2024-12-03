@@ -1,3 +1,4 @@
+//CHANGE - Bullet damage is different than weapon damage
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,8 +7,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private float damage = 5f;
+    [SerializeField] private float speed = 10.0f;
+    [SerializeField] private float damage = 5.0f;
+    [SerializeField] private float lifeTime = 30.0f;
     private Vector3 movementDir;
     
 
@@ -21,22 +23,20 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         transform.position += movementDir * speed * Time.deltaTime;
-
-        
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collider)
     {
         Destroy(gameObject);
 
         // Enemy takes damage //
-            Enemy3D enemy = collision.transform.GetComponent<Enemy3D>();
+            Enemy3D enemy = collider.transform.GetComponent<Enemy3D>();
             if (enemy != null)
             {
                enemy.TakeDamage(damage);
             }
 
-            Player3D player3D = collision.transform.GetComponent<Player3D>();
+            Player3D player3D =  collider.transform.GetComponent<Player3D>();
             if (player3D != null)
             {
                 player3D.TakeDamage(damage);
